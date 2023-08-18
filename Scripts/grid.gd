@@ -7,6 +7,7 @@ extends Node2D
 @export var y_start: int
 @export var offset: int
 
+# piece array
 var possible_pieces = [
 	preload("res://Scenes/blue_piece.tscn"),
 	preload("res://Scenes/green_piece.tscn"),
@@ -16,7 +17,12 @@ var possible_pieces = [
 	preload("res://Scenes/yellow_piece.tscn")
 ]
 
+# current pieces in the scene
 var all_pieces = []
+
+# touch variables
+var first_touch = Vector2(0, 0)
+var final_touch = Vector2(0, 0)
 
 func _ready():
 	randomize()
@@ -59,3 +65,19 @@ func grid_to_pixel(column, row): # Sets the position of the new piece
 	var new_x = x_start + offset * column
 	var new_y = y_start + -offset * row
 	return Vector2(new_x, new_y) # return the new position
+
+func pixel_to_grid(pixel_x, pixel_y): # translate pixel screen posiiton to grid position
+	var new_x = round((pixel_x - x_start) / offset)
+	var new_y = round((pixel_y - y_start) / -offset)
+	return Vector2(new_x, new_y)
+
+func touch_input(): # register click inputs
+	if Input.is_action_just_pressed("ui_touch"):
+		first_touch = get_global_mouse_position() # get mouse pos when clicked
+		var grid_position = pixel_to_grid(first_touch.x, first_touch.y)
+		print(grid_position)
+	if Input.is_action_just_released("ui_touch"):
+		final_touch = get_global_mouse_position() # get mouse pos when let go
+
+func _process(delta):
+	touch_input()

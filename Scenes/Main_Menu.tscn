@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0bbuqf2hlnf6"]
+[gd_scene load_steps=8 format=3 uid="uid://b0bbuqf2hlnf6"]
 
 [ext_resource type="Script" path="res://Scripts/Main_Menu.gd" id="1_5hxl0"]
 [ext_resource type="Texture2D" uid="uid://ldvpkhsy57qp" path="res://Art Assets/ShopBG_1920x1080px.png" id="2_1g0o0"]
 [ext_resource type="Script" path="res://Scripts/Volume_slider.gd" id="3_r4oa2"]
 [ext_resource type="AudioStream" uid="uid://csqxutm2lis7u" path="res://Music/8-bit-arcade-138828.mp3" id="3_tpkpp"]
+[ext_resource type="AudioStream" uid="uid://coun8xhj3ra67" path="res://SFX/8-bit-powerup-6768.mp3" id="5_afenf"]
+[ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="6_thaw8"]
 
 [sub_resource type="Theme" id="Theme_nqmex"]
 
@@ -26,6 +28,7 @@ offset_bottom = 365.0
 theme = SubResource("Theme_nqmex")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 0
 offset_top = 171.0
 offset_right = 444.0
 offset_bottom = 348.0
@@ -104,8 +107,9 @@ offset_top = -106.0
 offset_right = 442.0
 offset_bottom = -34.0
 
-[node name="Label" type="Label" parent="Control/PanelContainer"]
+[node name="Title" type="Label" parent="Control/PanelContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 52
 text = "Breakfast Break!"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -115,6 +119,20 @@ stream = ExtResource("3_tpkpp")
 autoplay = true
 bus = &"Music"
 
+[node name="SFXTest" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_afenf")
+bus = &"SFX"
+
+[node name="ButtonPress" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_thaw8")
+bus = &"SFX"
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="QuitTimer" type="Timer" parent="."]
+wait_time = 0.25
+
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Exit" to="." method="_on_exit_pressed"]
@@ -122,4 +140,7 @@ bus = &"Music"
 [connection signal="changed" from="Control/MarginContainer/OptionContainer/Music Slider" to="." method="_on_h_slider_changed"]
 [connection signal="pressed" from="Control/MarginContainer/OptionContainer/SFX" to="." method="_on_sfx_pressed"]
 [connection signal="changed" from="Control/MarginContainer/OptionContainer/SFX slider" to="." method="_on_h_slider_changed"]
+[connection signal="drag_ended" from="Control/MarginContainer/OptionContainer/SFX slider" to="." method="_on_sfx_slider_drag_ended"]
 [connection signal="pressed" from="Control/MarginContainer/OptionContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="QuitTimer" to="." method="_on_quit_timer_timeout"]

@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0bbuqf2hlnf6"]
+
+[ext_resource type="Script" path="res://Scripts/Main_Menu.gd" id="1_5hxl0"]
+
+[sub_resource type="Theme" id="Theme_nqmex"]
+
+[node name="Main_Menu" type="Node2D"]
+script = ExtResource("1_5hxl0")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 348.0
+offset_top = 257.0
+offset_right = 792.0
+offset_bottom = 365.0
+theme = SubResource("Theme_nqmex")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+offset_right = 444.0
+offset_bottom = 108.0
+
+[node name="MainMenuContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
+layout_mode = 2
+text = "New Game"
+
+[node name="Options" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="Exit" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="OptionContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Music" type="Button" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+text = "Music"
+
+[node name="SFX" type="Button" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+text = "SFX"
+
+[node name="Back" type="Button" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_top = -106.0
+offset_right = 442.0
+offset_bottom = -34.0
+
+[node name="Label" type="Label" parent="Control/PanelContainer"]
+layout_mode = 2
+text = "Breakfast Break!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/OptionContainer/Music" to="." method="_on_music_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/OptionContainer/SFX" to="." method="_on_sfx_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/OptionContainer/Back" to="." method="_on_back_pressed"]

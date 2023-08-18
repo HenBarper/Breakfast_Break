@@ -11,15 +11,8 @@ config_version=5
 [application]
 
 config/name="Breakfast Break"
-run/main_scene="res://characters/player_node.tscn"
+run/main_scene="res://Scenes/Main_Menu.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
-
-[input]
-
-FLAP={
-"deadzone": 0.5,
-"events": [null]
-}
 
 [rendering]
 

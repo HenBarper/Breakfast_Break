@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfg7fn47osmo0"]
+
+[ext_resource type="PackedScene" uid="uid://burb1l5uhjqib" path="res://Scenes/Piece.tscn" id="1_us5mc"]
+[ext_resource type="Texture2D" uid="uid://bcxis6scbk2by" path="res://Art Assets/Pieces/Pink Piece.png" id="2_75dwm"]
+
+[node name="pink_piece" instance=ExtResource("1_us5mc")]
+color = "pink"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_75dwm")

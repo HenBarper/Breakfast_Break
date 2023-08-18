@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://clpvd6h4mx7sn"]
+[gd_scene load_steps=9 format=3 uid="uid://clpvd6h4mx7sn"]
 
 [ext_resource type="Texture2D" uid="uid://bacnwvokb7dq5" path="res://Art Assets/Pieces/Blue Piece.png" id="1_2bqy4"]
 [ext_resource type="Texture2D" uid="uid://cktmwea258ilr" path="res://Art Assets/UI/Top UI v 2.png" id="1_pq45l"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://djyuw3j6yxbfm" path="res://Art Assets/Pieces/Light Green Piece.png" id="4_ujqpg"]
 [ext_resource type="Texture2D" uid="uid://cfyapvokdwd2e" path="res://Art Assets/Pieces/Green Piece.png" id="5_6cjq1"]
 [ext_resource type="Texture2D" uid="uid://bbpo0n71n8p1b" path="res://Art Assets/UI/Bottom UI v 2.png" id="7_bcieu"]
+[ext_resource type="Script" path="res://Scripts/grid.gd" id="8_qfrqt"]
 
 [node name="Game_Scene" type="Node2D"]
 
@@ -26,6 +27,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_pq45l")
 
 [node name="pieces" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, 90)
 
 [node name="BluePiece" type="Sprite2D" parent="pieces"]
@@ -444,3 +446,11 @@ offset_right = 720.0
 offset_bottom = 663.0
 texture = ExtResource("7_bcieu")
 expand_mode = 1
+
+[node name="grid" type="Node2D" parent="."]
+script = ExtResource("8_qfrqt")
+width = 10
+height = 8
+x_start = 288
+y_start = 602
+offset = 64

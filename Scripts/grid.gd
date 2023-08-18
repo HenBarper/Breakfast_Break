@@ -36,8 +36,24 @@ func spawn_pieces():
 		for j in height:
 			var rand = floor(randf_range(0, possible_pieces.size())) # choose a random number and store it
 			var piece = possible_pieces[rand].instantiate() # Instantiate that piece from the array
+			var loops = 0
+			while match_at(i, j, piece.color) && loops < 100: #check for match-3s before spawning in piece
+				rand = floor(randf_range(0, possible_pieces.size()))
+				loops += 1
+				piece = possible_pieces[rand].instantiate()
 			add_child(piece) # Adds piece to grid as child of grid
 			piece.position = grid_to_pixel(i, j) # Sets the position of the piece to the next position in the grid
+			all_pieces[i][j] = piece # sets the element of the 2d array to the piece at that position
+
+func match_at(column, row, color): # check the surrounding piece to see if their spawning would cause a match
+	if column > 1: # if there are pieces to the left
+		if all_pieces[column - 1][row] != null && all_pieces[column - 2][row] != null:
+			if all_pieces[column - 1][row].color == color && all_pieces[column - 2][row].color == color:
+				return true
+	if row > 1:
+		if all_pieces[column][row - 1] != null && all_pieces[column][row - 2] != null:
+			if all_pieces[column][row - 1].color == color && all_pieces[column][row - 2].color == color:
+				return true
 
 func grid_to_pixel(column, row): # Sets the position of the new piece
 	var new_x = x_start + offset * column

@@ -1,11 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0bbuqf2hlnf6"]
+[gd_scene load_steps=6 format=3 uid="uid://b0bbuqf2hlnf6"]
 
 [ext_resource type="Script" path="res://Scripts/Main_Menu.gd" id="1_5hxl0"]
+[ext_resource type="Texture2D" uid="uid://ldvpkhsy57qp" path="res://Art Assets/ShopBG_1920x1080px.png" id="2_1g0o0"]
+[ext_resource type="Script" path="res://Scripts/Volume_slider.gd" id="3_r4oa2"]
+[ext_resource type="AudioStream" uid="uid://csqxutm2lis7u" path="res://Music/8-bit-arcade-138828.mp3" id="3_tpkpp"]
 
 [sub_resource type="Theme" id="Theme_nqmex"]
 
 [node name="Main_Menu" type="Node2D"]
+position = Vector2(0, -1)
 script = ExtResource("1_5hxl0")
+
+[node name="ShopBg1920x1080Px" type="Sprite2D" parent="."]
+position = Vector2(577.5, 324.5)
+scale = Vector2(0.604688, 0.615741)
+texture = ExtResource("2_1g0o0")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -17,8 +26,9 @@ offset_bottom = 365.0
 theme = SubResource("Theme_nqmex")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
+offset_top = 171.0
 offset_right = 444.0
-offset_bottom = 108.0
+offset_bottom = 348.0
 
 [node name="MainMenuContainer" type="VBoxContainer" parent="Control/MarginContainer"]
 layout_mode = 2
@@ -39,13 +49,50 @@ text = "Exit"
 visible = false
 layout_mode = 2
 
-[node name="Music" type="Button" parent="Control/MarginContainer/OptionContainer"]
+[node name="Master" type="PanelContainer" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/OptionContainer/Master"]
+layout_mode = 2
+text = "Master
+"
+horizontal_alignment = 1
+
+[node name="Master Slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("3_r4oa2")
+bus_name = "Master"
+
+[node name="Music" type="PanelContainer" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/OptionContainer/Music"]
 layout_mode = 2
 text = "Music"
+horizontal_alignment = 1
+
+[node name="Music Slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("3_r4oa2")
+bus_name = "Music"
 
 [node name="SFX" type="Button" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
 text = "SFX"
+
+[node name="SFX slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("3_r4oa2")
+bus_name = "SFX"
 
 [node name="Back" type="Button" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
@@ -63,9 +110,16 @@ text = "Breakfast Break!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="MusicAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tpkpp")
+autoplay = true
+bus = &"Music"
+
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/OptionContainer/Music" to="." method="_on_music_pressed"]
+[connection signal="changed" from="Control/MarginContainer/OptionContainer/Master Slider" to="." method="_on_h_slider_changed"]
+[connection signal="changed" from="Control/MarginContainer/OptionContainer/Music Slider" to="." method="_on_h_slider_changed"]
 [connection signal="pressed" from="Control/MarginContainer/OptionContainer/SFX" to="." method="_on_sfx_pressed"]
+[connection signal="changed" from="Control/MarginContainer/OptionContainer/SFX slider" to="." method="_on_h_slider_changed"]
 [connection signal="pressed" from="Control/MarginContainer/OptionContainer/Back" to="." method="_on_back_pressed"]

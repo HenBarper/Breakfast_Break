@@ -1,9 +1,446 @@
-[gd_scene load_steps=2 format=3 uid="uid://clpvd6h4mx7sn"]
+[gd_scene load_steps=8 format=3 uid="uid://clpvd6h4mx7sn"]
 
-[ext_resource type="Texture2D" uid="uid://bmm370wodfooc" path="res://Scenes/icon.svg" id="1_d7q0g"]
+[ext_resource type="Texture2D" uid="uid://bacnwvokb7dq5" path="res://Art Assets/Pieces/Blue Piece.png" id="1_2bqy4"]
+[ext_resource type="Texture2D" uid="uid://cktmwea258ilr" path="res://Art Assets/UI/Top UI v 2.png" id="1_pq45l"]
+[ext_resource type="Texture2D" uid="uid://ckm23qfkjg8rq" path="res://Art Assets/UI/background 2.png" id="1_sk30v"]
+[ext_resource type="Texture2D" uid="uid://djvycb04hpfj4" path="res://Art Assets/Pieces/Orange Piece.png" id="3_0sm8q"]
+[ext_resource type="Texture2D" uid="uid://djyuw3j6yxbfm" path="res://Art Assets/Pieces/Light Green Piece.png" id="4_ujqpg"]
+[ext_resource type="Texture2D" uid="uid://cfyapvokdwd2e" path="res://Art Assets/Pieces/Green Piece.png" id="5_6cjq1"]
+[ext_resource type="Texture2D" uid="uid://bbpo0n71n8p1b" path="res://Art Assets/UI/Bottom UI v 2.png" id="7_bcieu"]
 
 [node name="Game_Scene" type="Node2D"]
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(483, 251)
-texture = ExtResource("1_d7q0g")
+[node name="background" type="TextureRect" parent="."]
+offset_left = 1.0
+offset_top = -376.0
+offset_right = 1152.0
+offset_bottom = 775.0
+texture = ExtResource("1_sk30v")
+expand_mode = 4
+stretch_mode = 1
+
+[node name="TopUiV2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(576, 65)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_pq45l")
+
+[node name="pieces" type="Node2D" parent="."]
+position = Vector2(0, 90)
+
+[node name="BluePiece" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece2" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece3" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece4" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece5" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece6" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece7" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece8" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece9" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece10" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece18" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece19" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece20" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece21" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece22" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece23" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece24" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece25" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece26" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece27" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece28" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece29" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece30" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece31" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece32" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece33" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece34" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece35" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece36" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece37" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece38" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece39" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece40" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece41" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece42" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece43" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece44" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece45" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece46" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece47" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece48" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece49" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece50" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece51" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece52" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece53" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece54" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece55" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece56" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece57" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece58" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece59" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece60" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece61" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece62" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece63" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece64" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece65" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece66" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece67" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece68" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece69" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece70" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece71" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece72" type="Sprite2D" parent="pieces"]
+position = Vector2(352, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece73" type="Sprite2D" parent="pieces"]
+position = Vector2(416, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece74" type="Sprite2D" parent="pieces"]
+position = Vector2(480, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece75" type="Sprite2D" parent="pieces"]
+position = Vector2(544, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece76" type="Sprite2D" parent="pieces"]
+position = Vector2(608, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece77" type="Sprite2D" parent="pieces"]
+position = Vector2(672, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece78" type="Sprite2D" parent="pieces"]
+position = Vector2(736, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece79" type="Sprite2D" parent="pieces"]
+position = Vector2(800, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece80" type="Sprite2D" parent="pieces"]
+position = Vector2(864, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece11" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 128)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="BluePiece12" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 192)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ujqpg")
+
+[node name="BluePiece13" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 256)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece14" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece15" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 384)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_0sm8q")
+
+[node name="BluePiece16" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_6cjq1")
+
+[node name="BluePiece17" type="Sprite2D" parent="pieces"]
+position = Vector2(288, 512)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2bqy4")
+
+[node name="TopUI" type="TextureRect" parent="."]
+offset_left = 432.0
+offset_top = 17.0
+offset_right = 720.0
+offset_bottom = 113.0
+texture = ExtResource("1_pq45l")
+expand_mode = 1
+
+[node name="BottomUI" type="TextureRect" parent="."]
+visible = false
+offset_left = 432.0
+offset_top = 617.0
+offset_right = 720.0
+offset_bottom = 663.0
+texture = ExtResource("7_bcieu")
+expand_mode = 1

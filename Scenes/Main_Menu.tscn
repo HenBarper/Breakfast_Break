@@ -32,6 +32,15 @@ offset_bottom = 540.0
 size_flags_horizontal = 4
 color = Color(1, 0.317647, 0.45098, 1)
 
+[node name="ColorRect3" type="ColorRect" parent="."]
+visible = false
+offset_left = 338.0
+offset_top = 417.0
+offset_right = 800.0
+offset_bottom = 619.0
+size_flags_horizontal = 4
+color = Color(1, 0.317647, 0.45098, 1)
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0

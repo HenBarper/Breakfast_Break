@@ -4,6 +4,7 @@ extends Node2D
 @onready var option_container = $Control/MarginContainer/OptionContainer
 @onready var start_timer = $StartTimer
 @onready var quit_timer = $QuitTimer
+@onready var color_rect_3 = $ColorRect3
 
 
 func _on_play_pressed():
@@ -13,6 +14,7 @@ func _on_play_pressed():
 func _on_options_pressed():
 	$ButtonPress.play()
 	main_menu_container.visible = false
+	color_rect_3.visible = true
 	option_container.visible = true
 
 func _on_exit_pressed():
@@ -22,6 +24,7 @@ func _on_exit_pressed():
 func _on_back_pressed():
 	$ButtonPress.play()
 	option_container.visible = false
+	color_rect_3.visible = false
 	main_menu_container.visible = true
 
 

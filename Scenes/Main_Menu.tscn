@@ -38,6 +38,7 @@ layout_mode = 2
 
 [node name="Play" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
 layout_mode = 2
+theme_override_colors/icon_normal_color = Color(0.619608, 0, 0.12549, 1)
 text = "New Game"
 
 [node name="Options" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
@@ -85,9 +86,13 @@ value = 1.0
 script = ExtResource("3_r4oa2")
 bus_name = "Music"
 
-[node name="SFX" type="Button" parent="Control/MarginContainer/OptionContainer"]
+[node name="sfx label" type="PanelContainer" parent="Control/MarginContainer/OptionContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/OptionContainer/sfx label"]
 layout_mode = 2
 text = "SFX"
+horizontal_alignment = 1
 
 [node name="SFX slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
@@ -138,7 +143,6 @@ wait_time = 0.25
 [connection signal="pressed" from="Control/MarginContainer/MainMenuContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="changed" from="Control/MarginContainer/OptionContainer/Master Slider" to="." method="_on_h_slider_changed"]
 [connection signal="changed" from="Control/MarginContainer/OptionContainer/Music Slider" to="." method="_on_h_slider_changed"]
-[connection signal="pressed" from="Control/MarginContainer/OptionContainer/SFX" to="." method="_on_sfx_pressed"]
 [connection signal="changed" from="Control/MarginContainer/OptionContainer/SFX slider" to="." method="_on_h_slider_changed"]
 [connection signal="drag_ended" from="Control/MarginContainer/OptionContainer/SFX slider" to="." method="_on_sfx_slider_drag_ended"]
 [connection signal="pressed" from="Control/MarginContainer/OptionContainer/Back" to="." method="_on_back_pressed"]

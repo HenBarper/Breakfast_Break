@@ -34,6 +34,13 @@ var possible_pieces = [
 # current pieces in the scene
 var all_pieces = []
 
+# swap back variables
+var piece_one = null
+var piece_two = null
+var last_place = Vector2(0,0)
+var last_direction = Vector2(0,0)
+var move_checked = false
+
 # touch variables
 var first_touch = Vector2(0, 0)
 var final_touch = Vector2(0, 0)
@@ -110,10 +117,11 @@ func touch_input(): # register click inputs
 			touch_difference(first_touch, final_touch) # gets the direction from click to unclick
 
 func swap_pieces(column, row, direction):
-	print("sawpping pieces")
+	print("swapping pieces")
 	var first_piece = all_pieces[column][row] # sets the first selection
 	var other_piece = all_pieces[column + direction.x][row + direction.y] # sets the second piece
 	if first_piece != null && other_piece != null:
+		store_info(first_piece, other_piece, Vector2(column, row), direction)
 		state = wait
 		all_pieces[column][row] = other_piece # sets the first piece to be the second piece
 		all_pieces[column + direction.x][row + direction.y] = first_piece # sets the second piece to be first piece
@@ -121,7 +129,21 @@ func swap_pieces(column, row, direction):
 #		other_piece.position = grid_to_pixel(column, row) # moves the second piece
 		first_piece.move(grid_to_pixel(column + direction.x, row + direction.y)) # TWEEN VERSION
 		other_piece.move(grid_to_pixel(column, row)) # TWEEN VERSION
-		find_matches()
+		if !move_checked:
+			find_matches()
+
+func store_info(first_piece, other_piece, place, direction):
+	piece_one = first_piece
+	piece_two = other_piece
+	last_place = place
+	last_direction = direction
+
+func swap_back():
+	#move the previously swapped pieces back to the previous place.
+	if piece_one != null && piece_two != null:
+		swap_pieces(last_place.x, last_place.y, last_direction)
+	state = move
+	move_checked = false
 
 func touch_difference(grid_1, grid_2): # find the direction of mouse drag to use for swapping pieces
 	print("checking touch dif")
@@ -171,16 +193,23 @@ func find_matches():
 							#destroy_timer.start() # starts the timer that checks for matched pieces to destroy
 	destroy_timer.start() # starts the timer that checks for matched pieces to destroy
 
-func destroy_matched(): # looks through all pieces and destroys ones marked matched
+func destroy_matched():
+	var was_matched = false # looks through all pieces and destroys ones marked matched
 	print("destroying matches")
 	state = move
+	move_checked = false
 	for i in width:
 		for j in height:
 			if all_pieces[i][j] != null: # if the current piece isn't null
 				if all_pieces[i][j].matched: # and it's marked matched
+					was_matched = true
 					all_pieces[i][j].queue_free() # destroy it
 					all_pieces[i][j] = null # set the piece's space to null
-					collapse_timer.start() # check for pieces to move down
+	move_checked = true
+	if was_matched:
+		collapse_timer.start() # check for pieces to move down
+	else:
+		swap_back()
 	#print("past collapse timer")
 
 func collapse_columns(): # looks through all the pieces for empty spaces and moves down the next piece up

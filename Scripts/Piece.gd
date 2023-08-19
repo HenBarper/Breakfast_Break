@@ -17,5 +17,5 @@ func move(target):
 
 func dim():
 	var sprite = get_node("Sprite2D")
-	sprite.modulate  = Color(1, 1, 1, 0.5)
+	sprite.modulate  = Color(1, 1, 1, 0.4)
 	pass

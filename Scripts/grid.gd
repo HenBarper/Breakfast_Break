@@ -1,5 +1,9 @@
 extends Node2D
 
+# timers
+@onready var destroy_timer = $"../destroy_timer"
+@onready var collapse_timer = $"../collapse_timer"
+
 # grid variables
 @export var width: int
 @export var height: int
@@ -76,44 +80,41 @@ func pixel_to_grid(pixel_x, pixel_y): # translate pixel screen posiiton to grid 
 	var new_y = round((pixel_y - y_start) / -offset)
 	return Vector2(new_x, new_y)
 
-func is_in_grid(column, row): # checks if the clicked position if within the grid of pieces
-	if column >= 0 && column < width:
-		if row >= 0 && row < height:
+func is_in_grid(grid_position): # checks if the clicked position if within the grid of pieces
+	if grid_position.x >= 0 && grid_position.x < width:
+		if grid_position.y >= 0 && grid_position.y < height:
 			return true
 	return false
 
 func touch_input(): # register click inputs
 	if Input.is_action_just_pressed("ui_touch"):
-		first_touch = get_global_mouse_position() # get mouse pos when clicked
-		var grid_position = pixel_to_grid(first_touch.x, first_touch.y) # gets grid pos of mouse click pos
-		print(grid_position)
-		if is_in_grid(grid_position.x, grid_position.y):
+		if is_in_grid(pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y)): # checks if the click is in the grid
+			first_touch = pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y) # sets a var with the click pos
 			controlling = true
 		else:
 			controlling = false
-			print("NONONONO")
 	if Input.is_action_just_released("ui_touch"):
-		final_touch = get_global_mouse_position() # get mouse pos when let go
-		var grid_position2 = pixel_to_grid(final_touch.x, final_touch.y) # gets grid pos of mouse unclick pos
-		print(grid_position2)
-		if is_in_grid(grid_position2.x, grid_position2.y) && controlling: # only works if both click and unclick were on valid grid spaces
-			print("SWIPE")
-			swap_sfx.play() # PLAY SFX
-			touch_difference(pixel_to_grid(first_touch.x, first_touch.y), grid_position2)
+		if is_in_grid(pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y)) && controlling: # checks if the unclick is in the grid and the previous click was in the grid
 			controlling = false
+			final_touch = pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y) # sets a var with the unlick pos
+			swap_sfx.play() # PLAY SFX
+			touch_difference(first_touch, final_touch) # gets the direction from click to unclick
 
 func swap_pieces(column, row, direction):
+	print("sawpping pieces")
 	var first_piece = all_pieces[column][row] # sets the first selection
 	var other_piece = all_pieces[column + direction.x][row + direction.y] # sets the second piece
-	all_pieces[column][row] = other_piece # sets the first piece to be the second piece
-	all_pieces[column + direction.x][row + direction.y] = first_piece # sets the second piece to be first piece
-#	first_piece.position = grid_to_pixel(column + direction.x, row + direction.y) # moves the 1st piece
-#	other_piece.position = grid_to_pixel(column, row) # moves the second piece
-	first_piece.move(grid_to_pixel(column + direction.x, row + direction.y)) # TWEEN VERSION
-	other_piece.move(grid_to_pixel(column, row)) # TWEEN VERSION
-	find_matches()
+	if first_piece != null && other_piece != null:
+		all_pieces[column][row] = other_piece # sets the first piece to be the second piece
+		all_pieces[column + direction.x][row + direction.y] = first_piece # sets the second piece to be first piece
+#		first_piece.position = grid_to_pixel(column + direction.x, row + direction.y) # moves the 1st piece
+#		other_piece.position = grid_to_pixel(column, row) # moves the second piece
+		first_piece.move(grid_to_pixel(column + direction.x, row + direction.y)) # TWEEN VERSION
+		other_piece.move(grid_to_pixel(column, row)) # TWEEN VERSION
+		find_matches()
 
 func touch_difference(grid_1, grid_2): # find the direction of mouse drag to use for swapping pieces
+	print("checking touch dif")
 	var difference = grid_2 - grid_1
 	if abs(difference.x) > abs(difference.y):
 		if difference.x > 0:
@@ -130,6 +131,7 @@ func _process(delta): # _process runs every frame
 	touch_input() # check for input eavery frame update
 
 func find_matches():
+	print("finding matches")
 	for i in width: # check each column
 		for j in height: # check each row
 			if all_pieces[i][j] != null: # check that the current piece exists
@@ -144,6 +146,7 @@ func find_matches():
 							all_pieces[i + 1][j].matched = true
 							all_pieces[i + 1][j].dim()
 							match_sfx.play()
+							#destroy_timer.start() # starts the timer that checks for matched pieces to destroy
 				if j > 0 && j < height - 1:
 					if all_pieces[i][j - 1] != null && all_pieces[i][j + 1] != null: # check that 3 pieces in a row exist
 						if all_pieces[i][j - 1].color == current_color && all_pieces[i][j + 1].color == current_color: # check that the colors match
@@ -154,3 +157,38 @@ func find_matches():
 							all_pieces[i][j + 1].matched = true
 							all_pieces[i][j + 1].dim()
 							match_sfx.play()
+							#destroy_timer.start() # starts the timer that checks for matched pieces to destroy
+	destroy_timer.start() # starts the timer that checks for matched pieces to destroy
+
+func destroy_matched(): # looks through all pieces and destroys ones marked matched
+	print("destroying matches")
+	for i in width:
+		for j in height:
+			if all_pieces[i][j] != null: # if the current piece isn't null
+				if all_pieces[i][j].matched: # and it's marked matched
+					all_pieces[i][j].queue_free() # destroy it
+					all_pieces[i][j] = null # set the piece's space to null
+					collapse_timer.start() # check for pieces to move down
+	#print("past collapse timer")
+
+func collapse_columns(): # looks through all the pieces for empty spaces and moves down the next piece up
+	print("collapsing columns")
+	for i in width:
+		for j in height:
+			if all_pieces[i][j] == null: # if the current piece isn't null
+				for k in range(j + 1, height): # check each piece above it
+					if all_pieces[i][k] != null: # if that piece isn't null
+#						all_pieces[i][k].position = grid_to_pixel(i, j) # move it down
+						all_pieces[i][k].move(grid_to_pixel(i, j)) #TWEEN VERSION
+						all_pieces[i][j] = all_pieces[i][k] # set the current space to the moved down piece
+						all_pieces[i][k] = null # set the above space to null
+						#find_matches()
+						break
+
+func _on_destroy_timer_timeout(): # runs .5 seconds after matches are checked for
+	#print("destroy timer started")
+	destroy_matched() 
+
+func _on_collapse_timer_timeout():
+	#print("Collapse timer started")
+	collapse_columns()

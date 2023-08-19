@@ -10,11 +10,11 @@
 [ext_resource type="Script" path="res://Scripts/grid.gd" id="8_qfrqt"]
 [ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="9_4yk1e"]
 [ext_resource type="AudioStream" uid="uid://dxk2bqtfpxr5s" path="res://SFX/game-start-6104.mp3" id="10_75r0m"]
-[ext_resource type="PackedScene" path="res://Scenes/hamster_1.tscn" id="11_0ky8n"]
-[ext_resource type="PackedScene" path="res://Scenes/hamster_2.tscn" id="12_4rdj6"]
-[ext_resource type="PackedScene" path="res://Scenes/hamster_3.tscn" id="13_tab8c"]
-[ext_resource type="PackedScene" path="res://Scenes/hamster_4.tscn" id="14_q8qsi"]
-[ext_resource type="PackedScene" path="res://Scenes/hamster_5.tscn" id="15_uk4ck"]
+[ext_resource type="PackedScene" uid="uid://dtnsoy2xdvef3" path="res://Scenes/hamster_1.tscn" id="11_0ky8n"]
+[ext_resource type="PackedScene" uid="uid://bkoggela5thcb" path="res://Scenes/hamster_2.tscn" id="12_4rdj6"]
+[ext_resource type="PackedScene" uid="uid://bdt1xq1vce1sf" path="res://Scenes/hamster_3.tscn" id="13_tab8c"]
+[ext_resource type="PackedScene" uid="uid://es1sfwm7ou8e" path="res://Scenes/hamster_4.tscn" id="14_q8qsi"]
+[ext_resource type="PackedScene" uid="uid://dkgthbdel3gvd" path="res://Scenes/hamster_5.tscn" id="15_uk4ck"]
 
 [node name="Game_Scene" type="Node2D"]
 

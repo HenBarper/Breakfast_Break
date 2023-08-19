@@ -23,6 +23,7 @@ var all_pieces = []
 # touch variables
 var first_touch = Vector2(0, 0)
 var final_touch = Vector2(0, 0)
+var controlling = false
 
 func _ready():
 	randomize()
@@ -67,17 +68,54 @@ func grid_to_pixel(column, row): # Sets the position of the new piece
 	return Vector2(new_x, new_y) # return the new position
 
 func pixel_to_grid(pixel_x, pixel_y): # translate pixel screen posiiton to grid position
-	var new_x = round((pixel_x - x_start) / offset)
+	var new_x = round((pixel_x - x_start) / offset) # pemdas baybee
 	var new_y = round((pixel_y - y_start) / -offset)
 	return Vector2(new_x, new_y)
+
+func is_in_grid(column, row): # checks if the clicked position if within the grid of pieces
+	if column >= 0 && column < width:
+		if row >= 0 && row < height:
+			return true
+	return false
 
 func touch_input(): # register click inputs
 	if Input.is_action_just_pressed("ui_touch"):
 		first_touch = get_global_mouse_position() # get mouse pos when clicked
-		var grid_position = pixel_to_grid(first_touch.x, first_touch.y)
+		var grid_position = pixel_to_grid(first_touch.x, first_touch.y) # gets grid pos of mouse click pos
 		print(grid_position)
+		if is_in_grid(grid_position.x, grid_position.y):
+			controlling = true
+		else:
+			controlling = false
+			print("NONONONO")
 	if Input.is_action_just_released("ui_touch"):
 		final_touch = get_global_mouse_position() # get mouse pos when let go
+		var grid_position2 = pixel_to_grid(final_touch.x, final_touch.y) # gets grid pos of mouse unclick pos
+		print(grid_position2)
+		if is_in_grid(grid_position2.x, grid_position2.y) && controlling: # only works if both click and unclick were on valid grid spaces
+			print("SWIPE")
+			touch_difference(pixel_to_grid(first_touch.x, first_touch.y), grid_position2)
+
+func swap_pieces(column, row, direction):
+	var first_piece = all_pieces[column][row] # sets the first selection
+	var other_piece = all_pieces[column + direction.x][row + direction.y] # sets the second piece
+	all_pieces[column][row] = other_piece # sets the first piece to be the second piece
+	all_pieces[column + direction.x][row + direction.y] = first_piece # sets the second piece to be first piece
+	first_piece.position = grid_to_pixel(column + direction.x, row + direction.y) # moves the 1st piece
+	other_piece.position = grid_to_pixel(column, row) # move the second piece
+
+func touch_difference(grid_1, grid_2):
+	var difference = grid_2 - grid_1
+	if abs(difference.x) > abs(difference.y):
+		if difference.x > 0:
+			swap_pieces(grid_1.x, grid_1.y, Vector2(1, 0))
+		elif difference.x < 0:
+			swap_pieces(grid_1.x, grid_1.y, Vector2(-1, 0))
+	elif abs(difference.y) > abs(difference.x):
+		if difference.y > 0:
+			swap_pieces(grid_1.x, grid_1.y, Vector2(0, 1))
+		elif difference.y < 0:
+			swap_pieces(grid_1.x, grid_1.y, Vector2(0, -1))
 
 func _process(delta):
 	touch_input()

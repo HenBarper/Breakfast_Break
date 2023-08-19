@@ -4,6 +4,7 @@ extends Node2D
 @onready var destroy_timer = $"../destroy_timer"
 @onready var collapse_timer = $"../collapse_timer"
 @onready var refill_timer = $"../refill_timer"
+#@onready var newgame_timer = $"../newgame_timer"
 
 # grid variables
 @export var width: int
@@ -11,6 +12,7 @@ extends Node2D
 @export var x_start: int
 @export var y_start: int
 @export var offset: int
+@export var y_offset: int
 
 # SFX
 @onready var swap_sfx = $"../swapSFX"
@@ -37,7 +39,7 @@ var controlling = false
 func _ready():
 	randomize()
 	all_pieces = make_2d_array() # Sets all the pieces of the array to a variable
-	spawn_pieces()
+#	spawn_pieces()
 
 func make_2d_array():
 	var array = []
@@ -58,9 +60,11 @@ func spawn_pieces():
 				loops += 1
 				piece = possible_pieces[rand].instantiate()
 			add_child(piece) # Adds piece to grid as child of grid
-			piece.position = grid_to_pixel(i, j) # Sets the position of the piece to the next position in the grid
-			all_pieces[i][j] = piece # sets the element of the 2d array to the piece at that position
-
+			piece.position = grid_to_pixel(i, j - y_offset) # Sets the position of the piece to the next position in the grid
+			piece.move(grid_to_pixel(i,j))
+#			piece.position = grid_to_pixel(i,j)
+			all_pieces[i][j] = piece
+			
 func match_at(column, row, color): # check the surrounding piece to see if their spawning would cause a match
 	if column > 1: # if there are pieces to the left
 		if all_pieces[column - 1][row] != null && all_pieces[column - 2][row] != null:
@@ -199,7 +203,8 @@ func refill_columns():
 					loops += 1
 					piece = possible_pieces[rand].instantiate()
 				add_child(piece) # Adds piece to grid as child of grid
-				piece.position = grid_to_pixel(i, j) # Sets the position of the piece to the next position in the grid
+				piece.position = grid_to_pixel(i, j - y_offset) # Sets the position of the piece to the next position in the grid
+				piece.move(grid_to_pixel(i,j))
 				all_pieces[i][j] = piece
 	find_matches()
 
@@ -213,3 +218,6 @@ func _on_collapse_timer_timeout():
 
 func _on_refill_timer_timeout():
 	refill_columns()
+
+func _on_newgame_timer_timeout():
+	spawn_pieces()

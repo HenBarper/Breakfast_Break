@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdt1xq1vce1sf"]
+
+[ext_resource type="Texture2D" uid="uid://bh2hl5qt76o4" path="res://Art Assets/BearSprites.png" id="1_q7ie3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2glc"]
+atlas = ExtResource("1_q7ie3")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0on4j"]
+atlas = ExtResource("1_q7ie3")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_etptd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2glc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0on4j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="hamster 3" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_etptd")
+autoplay = "default"
+frame_progress = 0.519594

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://clpvd6h4mx7sn"]
+[gd_scene load_steps=16 format=3 uid="uid://clpvd6h4mx7sn"]
 
 [ext_resource type="Texture2D" uid="uid://bacnwvokb7dq5" path="res://Art Assets/Pieces/Blue Piece.png" id="1_2bqy4"]
 [ext_resource type="Texture2D" uid="uid://yu815ho6falp" path="res://Art Assets/patio.png" id="1_iqt3c"]
@@ -10,7 +10,11 @@
 [ext_resource type="Script" path="res://Scripts/grid.gd" id="8_qfrqt"]
 [ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="9_4yk1e"]
 [ext_resource type="AudioStream" uid="uid://dxk2bqtfpxr5s" path="res://SFX/game-start-6104.mp3" id="10_75r0m"]
-[ext_resource type="Texture2D" uid="uid://bh2hl5qt76o4" path="res://Art Assets/BearSprites.png" id="11_ev3wq"]
+[ext_resource type="PackedScene" uid="uid://dtnsoy2xdvef3" path="res://Scenes/hamster_1.tscn" id="11_0ky8n"]
+[ext_resource type="PackedScene" uid="uid://bkoggela5thcb" path="res://Scenes/hamster_2.tscn" id="12_4rdj6"]
+[ext_resource type="PackedScene" uid="uid://bdt1xq1vce1sf" path="res://Scenes/hamster_3.tscn" id="13_tab8c"]
+[ext_resource type="PackedScene" uid="uid://es1sfwm7ou8e" path="res://Scenes/hamster_4.tscn" id="14_q8qsi"]
+[ext_resource type="PackedScene" uid="uid://dkgthbdel3gvd" path="res://Scenes/hamster_5.tscn" id="15_uk4ck"]
 
 [node name="Game_Scene" type="Node2D"]
 
@@ -463,7 +467,6 @@ height = 8
 x_start = 288
 y_start = 602
 offset = 64
-y_offset = -2
 
 [node name="swapSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_4yk1e")
@@ -475,42 +478,30 @@ bus = &"SFX"
 
 [node name="Bears" type="Node" parent="."]
 
-[node name="BearSprite1" type="Sprite2D" parent="Bears"]
+[node name="hamster 1" parent="Bears" instance=ExtResource("11_0ky8n")]
 texture_filter = 1
-position = Vector2(41, 579)
+position = Vector2(105, 536)
 scale = Vector2(2, 2)
-texture = ExtResource("11_ev3wq")
-flip_h = true
-hframes = 2
-vframes = 5
 
-[node name="BearSprite2" type="Sprite2D" parent="Bears"]
+[node name="hamster 2" parent="Bears" instance=ExtResource("12_4rdj6")]
 texture_filter = 1
-position = Vector2(150, 595)
+position = Vector2(1096, 624)
 scale = Vector2(2, 2)
-texture = ExtResource("11_ev3wq")
-hframes = 2
-vframes = 5
-frame = 3
 
-[node name="BearSprite3" type="Sprite2D" parent="Bears"]
+[node name="hamster 3" parent="Bears" instance=ExtResource("13_tab8c")]
 texture_filter = 1
-position = Vector2(958, 603)
+position = Vector2(977, 575)
 scale = Vector2(2, 2)
-texture = ExtResource("11_ev3wq")
-flip_h = true
-hframes = 2
-vframes = 5
-frame = 5
 
-[node name="BearSprite4" type="Sprite2D" parent="Bears"]
+[node name="hamster 4" parent="Bears" instance=ExtResource("14_q8qsi")]
 texture_filter = 1
-position = Vector2(1100, 586)
+position = Vector2(168, 606)
 scale = Vector2(2, 2)
-texture = ExtResource("11_ev3wq")
-hframes = 2
-vframes = 5
-frame = 6
+
+[node name="hamster 5" parent="Bears" instance=ExtResource("15_uk4ck")]
+texture_filter = 1
+position = Vector2(1092, 541)
+scale = Vector2(2, 2)
 
 [node name="destroy_timer" type="Timer" parent="."]
 wait_time = 0.35

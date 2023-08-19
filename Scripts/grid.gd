@@ -7,6 +7,9 @@ extends Node2D
 @export var y_start: int
 @export var offset: int
 
+# SFX
+# @onready var swap_sfx = $"../swapSFX"
+
 # piece array
 var possible_pieces = [
 	preload("res://Scenes/blue_piece.tscn"),
@@ -94,17 +97,22 @@ func touch_input(): # register click inputs
 		print(grid_position2)
 		if is_in_grid(grid_position2.x, grid_position2.y) && controlling: # only works if both click and unclick were on valid grid spaces
 			print("SWIPE")
+			# swap_sfx.play() # PLAY SFX
 			touch_difference(pixel_to_grid(first_touch.x, first_touch.y), grid_position2)
+			controlling = false
 
 func swap_pieces(column, row, direction):
 	var first_piece = all_pieces[column][row] # sets the first selection
 	var other_piece = all_pieces[column + direction.x][row + direction.y] # sets the second piece
 	all_pieces[column][row] = other_piece # sets the first piece to be the second piece
 	all_pieces[column + direction.x][row + direction.y] = first_piece # sets the second piece to be first piece
-	first_piece.position = grid_to_pixel(column + direction.x, row + direction.y) # moves the 1st piece
-	other_piece.position = grid_to_pixel(column, row) # move the second piece
+#	first_piece.position = grid_to_pixel(column + direction.x, row + direction.y) # moves the 1st piece
+#	other_piece.position = grid_to_pixel(column, row) # moves the second piece
+	first_piece.move(grid_to_pixel(column + direction.x, row + direction.y)) # TWEEN VERSION
+	other_piece.move(grid_to_pixel(column, row)) # TWEEN VERSION
+	find_matches()
 
-func touch_difference(grid_1, grid_2):
+func touch_difference(grid_1, grid_2): # find the direction of mouse drag to use for swapping pieces
 	var difference = grid_2 - grid_1
 	if abs(difference.x) > abs(difference.y):
 		if difference.x > 0:
@@ -117,5 +125,29 @@ func touch_difference(grid_1, grid_2):
 		elif difference.y < 0:
 			swap_pieces(grid_1.x, grid_1.y, Vector2(0, -1))
 
-func _process(delta):
-	touch_input()
+func _process(delta): # _process runs every frame
+	touch_input() # check for input eavery frame update
+
+func find_matches():
+	for i in width: # check each column
+		for j in height: # check each row
+			if all_pieces[i][j] != null: # check that the current piece exists
+				var current_color = all_pieces[i][j].color # set color of current piece
+				if i > 0 && i < width - 1:
+					if all_pieces[i - 1][j] != null && all_pieces[i + 1][j] != null: # check that 3 pieces in a row exist
+						if all_pieces[i - 1][j].color == current_color && all_pieces[i + 1][j].color == current_color: # check that the colors match
+							all_pieces[i - 1][j].matched = true
+							all_pieces[i - 1][j].dim()
+							all_pieces[i][j].matched = true
+							all_pieces[i][j].dim()
+							all_pieces[i + 1][j].matched = true
+							all_pieces[i + 1][j].dim()
+				if j > 0 && j < height - 1:
+					if all_pieces[i][j - 1] != null && all_pieces[i][j + 1] != null: # check that 3 pieces in a row exist
+						if all_pieces[i][j - 1].color == current_color && all_pieces[i][j + 1].color == current_color: # check that the colors match
+							all_pieces[i][j - 1].matched = true
+							all_pieces[i][j - 1].dim()
+							all_pieces[i][j].matched = true
+							all_pieces[i][j].dim()
+							all_pieces[i][j + 1].matched = true
+							all_pieces[i][j + 1].dim()

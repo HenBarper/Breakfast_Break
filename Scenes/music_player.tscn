@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1taffw8y4f7c"]
+
+[ext_resource type="AudioStream" uid="uid://csqxutm2lis7u" path="res://Music/8-bit-arcade-138828.mp3" id="1_pvnxb"]
+
+[node name="Music_Player" type="AudioStreamPlayer"]
+stream = ExtResource("1_pvnxb")
+bus = &"Music"

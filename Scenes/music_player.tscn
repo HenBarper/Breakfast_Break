@@ -3,5 +3,7 @@
 [ext_resource type="AudioStream" uid="uid://csqxutm2lis7u" path="res://Music/8-bit-arcade-138828.mp3" id="1_pvnxb"]
 
 [node name="Music_Player" type="AudioStreamPlayer"]
+process_mode = 4
 stream = ExtResource("1_pvnxb")
+autoplay = true
 bus = &"Music"

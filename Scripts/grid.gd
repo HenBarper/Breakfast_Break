@@ -3,6 +3,7 @@ extends Node2D
 # timers
 @onready var destroy_timer = $"../destroy_timer"
 @onready var collapse_timer = $"../collapse_timer"
+@onready var refill_timer = $"../refill_timer"
 
 # grid variables
 @export var width: int
@@ -184,6 +185,23 @@ func collapse_columns(): # looks through all the pieces for empty spaces and mov
 						all_pieces[i][k] = null # set the above space to null
 						#find_matches()
 						break
+	refill_timer.start()
+						
+func refill_columns():
+	for i in width:
+		for j in height:
+			if all_pieces[i][j] == null:
+				var rand = floor(randf_range(0, possible_pieces.size())) # choose a random number and store it
+				var piece = possible_pieces[rand].instantiate() # Instantiate that piece from the array
+				var loops = 0
+				while match_at(i, j, piece.color) && loops < 100: #check for match-3s before spawning in piece
+					rand = floor(randf_range(0, possible_pieces.size()))
+					loops += 1
+					piece = possible_pieces[rand].instantiate()
+				add_child(piece) # Adds piece to grid as child of grid
+				piece.position = grid_to_pixel(i, j) # Sets the position of the piece to the next position in the grid
+				all_pieces[i][j] = piece
+	find_matches()
 
 func _on_destroy_timer_timeout(): # runs .5 seconds after matches are checked for
 	#print("destroy timer started")
@@ -192,3 +210,6 @@ func _on_destroy_timer_timeout(): # runs .5 seconds after matches are checked fo
 func _on_collapse_timer_timeout():
 	#print("Collapse timer started")
 	collapse_columns()
+
+func _on_refill_timer_timeout():
+	refill_columns()

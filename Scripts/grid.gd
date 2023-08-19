@@ -8,7 +8,8 @@ extends Node2D
 @export var offset: int
 
 # SFX
-# @onready var swap_sfx = $"../swapSFX"
+@onready var swap_sfx = $"../swapSFX"
+@onready var match_sfx = $"../matchSFX"
 
 # piece array
 var possible_pieces = [
@@ -97,7 +98,7 @@ func touch_input(): # register click inputs
 		print(grid_position2)
 		if is_in_grid(grid_position2.x, grid_position2.y) && controlling: # only works if both click and unclick were on valid grid spaces
 			print("SWIPE")
-			# swap_sfx.play() # PLAY SFX
+			swap_sfx.play() # PLAY SFX
 			touch_difference(pixel_to_grid(first_touch.x, first_touch.y), grid_position2)
 			controlling = false
 
@@ -142,6 +143,7 @@ func find_matches():
 							all_pieces[i][j].dim()
 							all_pieces[i + 1][j].matched = true
 							all_pieces[i + 1][j].dim()
+							match_sfx.play()
 				if j > 0 && j < height - 1:
 					if all_pieces[i][j - 1] != null && all_pieces[i][j + 1] != null: # check that 3 pieces in a row exist
 						if all_pieces[i][j - 1].color == current_color && all_pieces[i][j + 1].color == current_color: # check that the colors match
@@ -151,3 +153,4 @@ func find_matches():
 							all_pieces[i][j].dim()
 							all_pieces[i][j + 1].matched = true
 							all_pieces[i][j + 1].dim()
+							match_sfx.play()

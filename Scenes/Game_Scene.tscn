@@ -1,25 +1,33 @@
-[gd_scene load_steps=10 format=3 uid="uid://clpvd6h4mx7sn"]
+[gd_scene load_steps=12 format=3 uid="uid://clpvd6h4mx7sn"]
 
 [ext_resource type="Texture2D" uid="uid://bacnwvokb7dq5" path="res://Art Assets/Pieces/Blue Piece.png" id="1_2bqy4"]
+[ext_resource type="Texture2D" uid="uid://yu815ho6falp" path="res://Art Assets/patio.png" id="1_iqt3c"]
 [ext_resource type="Texture2D" uid="uid://cktmwea258ilr" path="res://Art Assets/UI/Top UI v 2.png" id="1_pq45l"]
-[ext_resource type="Texture2D" uid="uid://ckm23qfkjg8rq" path="res://Art Assets/UI/background 2.png" id="1_sk30v"]
 [ext_resource type="Texture2D" uid="uid://djvycb04hpfj4" path="res://Art Assets/Pieces/Orange Piece.png" id="3_0sm8q"]
 [ext_resource type="Texture2D" uid="uid://djyuw3j6yxbfm" path="res://Art Assets/Pieces/Light Green Piece.png" id="4_ujqpg"]
 [ext_resource type="Texture2D" uid="uid://cfyapvokdwd2e" path="res://Art Assets/Pieces/Green Piece.png" id="5_6cjq1"]
 [ext_resource type="Texture2D" uid="uid://bbpo0n71n8p1b" path="res://Art Assets/UI/Bottom UI v 2.png" id="7_bcieu"]
 [ext_resource type="Script" path="res://Scripts/grid.gd" id="8_qfrqt"]
-[ext_resource type="AudioStream" uid="uid://coun8xhj3ra67" path="res://SFX/8-bit-powerup-6768.mp3" id="9_aq4rd"]
+[ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="9_4yk1e"]
+[ext_resource type="AudioStream" uid="uid://dxk2bqtfpxr5s" path="res://SFX/game-start-6104.mp3" id="10_75r0m"]
+[ext_resource type="Texture2D" uid="uid://bh2hl5qt76o4" path="res://Art Assets/BearSprites.png" id="11_ev3wq"]
 
 [node name="Game_Scene" type="Node2D"]
 
 [node name="background" type="TextureRect" parent="."]
 offset_left = 1.0
-offset_top = -376.0
+offset_top = -1.0
 offset_right = 1152.0
-offset_bottom = 775.0
-texture = ExtResource("1_sk30v")
-expand_mode = 4
-stretch_mode = 1
+offset_bottom = 649.0
+texture = ExtResource("1_iqt3c")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 251.0
+offset_top = 117.0
+offset_right = 900.0
+offset_bottom = 637.0
+color = Color(0.996078, 0.811765, 0.65098, 0.905882)
 
 [node name="TopUiV2" type="Sprite2D" parent="."]
 visible = false
@@ -457,5 +465,48 @@ y_start = 602
 offset = 64
 
 [node name="swapSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_aq4rd")
+stream = ExtResource("9_4yk1e")
 bus = &"SFX"
+
+[node name="matchSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_75r0m")
+bus = &"SFX"
+
+[node name="Bears" type="Node" parent="."]
+
+[node name="BearSprite1" type="Sprite2D" parent="Bears"]
+texture_filter = 1
+position = Vector2(41, 579)
+scale = Vector2(2, 2)
+texture = ExtResource("11_ev3wq")
+flip_h = true
+hframes = 2
+vframes = 5
+
+[node name="BearSprite2" type="Sprite2D" parent="Bears"]
+texture_filter = 1
+position = Vector2(150, 595)
+scale = Vector2(2, 2)
+texture = ExtResource("11_ev3wq")
+hframes = 2
+vframes = 5
+frame = 3
+
+[node name="BearSprite3" type="Sprite2D" parent="Bears"]
+texture_filter = 1
+position = Vector2(958, 603)
+scale = Vector2(2, 2)
+texture = ExtResource("11_ev3wq")
+flip_h = true
+hframes = 2
+vframes = 5
+frame = 5
+
+[node name="BearSprite4" type="Sprite2D" parent="Bears"]
+texture_filter = 1
+position = Vector2(1100, 586)
+scale = Vector2(2, 2)
+texture = ExtResource("11_ev3wq")
+hframes = 2
+vframes = 5
+frame = 6

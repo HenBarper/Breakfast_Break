@@ -1,5 +1,8 @@
 extends Node2D
 
+# State Machine
+enum {wait, move}
+var state
 # timers
 @onready var destroy_timer = $"../destroy_timer"
 @onready var collapse_timer = $"../collapse_timer"
@@ -37,6 +40,7 @@ var final_touch = Vector2(0, 0)
 var controlling = false
 
 func _ready():
+	state = move
 	randomize()
 	all_pieces = make_2d_array() # Sets all the pieces of the array to a variable
 #	spawn_pieces()
@@ -110,6 +114,7 @@ func swap_pieces(column, row, direction):
 	var first_piece = all_pieces[column][row] # sets the first selection
 	var other_piece = all_pieces[column + direction.x][row + direction.y] # sets the second piece
 	if first_piece != null && other_piece != null:
+		state = wait
 		all_pieces[column][row] = other_piece # sets the first piece to be the second piece
 		all_pieces[column + direction.x][row + direction.y] = first_piece # sets the second piece to be first piece
 #		first_piece.position = grid_to_pixel(column + direction.x, row + direction.y) # moves the 1st piece
@@ -133,7 +138,8 @@ func touch_difference(grid_1, grid_2): # find the direction of mouse drag to use
 			swap_pieces(grid_1.x, grid_1.y, Vector2(0, -1))
 
 func _process(delta): # _process runs every frame
-	touch_input() # check for input eavery frame update
+	if state == move:
+		touch_input() # check for input every frame update
 
 func find_matches():
 	print("finding matches")
@@ -167,6 +173,7 @@ func find_matches():
 
 func destroy_matched(): # looks through all pieces and destroys ones marked matched
 	print("destroying matches")
+	state = move
 	for i in width:
 		for j in height:
 			if all_pieces[i][j] != null: # if the current piece isn't null
@@ -178,6 +185,7 @@ func destroy_matched(): # looks through all pieces and destroys ones marked matc
 
 func collapse_columns(): # looks through all the pieces for empty spaces and moves down the next piece up
 	print("collapsing columns")
+	state = wait
 	for i in width:
 		for j in height:
 			if all_pieces[i][j] == null: # if the current piece isn't null

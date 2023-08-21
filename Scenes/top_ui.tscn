@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://b11d4bw57h8go"]
+[gd_scene load_steps=6 format=3 uid="uid://b11d4bw57h8go"]
 
 [ext_resource type="Texture2D" uid="uid://dnj16tmydhxxv" path="res://Art Assets/UI/Top_UI_v_2.png" id="1_xs1p4"]
 [ext_resource type="Script" path="res://Scripts/top_ui.gd" id="2_22iws"]
 [ext_resource type="FontFile" uid="uid://bh15jb83w80uc" path="res://Art Assets/Fonts/PeaberryBase.ttf" id="2_m0wfx"]
+[ext_resource type="Script" path="res://Scripts/volume_slider_v.gd" id="4_42glk"]
+[ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="5_ckxsa"]
 
 [node name="TopUI" type="TextureRect"]
 offset_left = 432.0
@@ -21,7 +23,7 @@ offset_right = 92.0
 offset_bottom = 45.0
 theme_override_fonts/font = ExtResource("2_m0wfx")
 theme_override_font_sizes/font_size = 17
-text = "0000000"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -33,7 +35,7 @@ offset_right = 172.0
 offset_bottom = 51.0
 theme_override_fonts/font = ExtResource("2_m0wfx")
 theme_override_font_sizes/font_size = 19
-text = "00:00"
+text = "3:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -44,11 +46,114 @@ offset_right = 261.0
 offset_bottom = 40.0
 theme_override_fonts/font = ExtResource("2_m0wfx")
 theme_override_font_sizes/font_size = 17
-text = "0"
+text = "50"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -383.0
+offset_top = 94.0
+offset_right = -226.0
+offset_bottom = 421.0
+color = Color(0.996078, 0.466667, 0.458824, 0.803922)
+
+[node name="master_slider" type="VSlider" parent="."]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 0
+offset_left = -369.0
+offset_top = 113.0
+offset_right = -353.0
+offset_bottom = 413.0
+max_value = 1.0
+step = 0.001
+script = ExtResource("4_42glk")
+bus_name = "Master"
+
+[node name="Label" type="Label" parent="master_slider"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -21.0
+offset_right = 30.0
+offset_bottom = 2.0
+theme_override_fonts/font = ExtResource("2_m0wfx")
+theme_override_font_sizes/font_size = 12
+text = "Master"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="music_slider" type="VSlider" parent="."]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 0
+offset_left = -313.0
+offset_top = 113.0
+offset_right = -297.0
+offset_bottom = 413.0
+max_value = 1.0
+step = 0.001
+script = ExtResource("4_42glk")
+bus_name = "Music"
+
+[node name="Label" type="Label" parent="music_slider"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -21.0
+offset_right = 30.0
+offset_bottom = 2.0
+theme_override_fonts/font = ExtResource("2_m0wfx")
+theme_override_font_sizes/font_size = 12
+text = "Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sfx_slider" type="VSlider" parent="."]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 0
+offset_left = -255.0
+offset_top = 113.0
+offset_right = -239.0
+offset_bottom = 413.0
+max_value = 1.0
+step = 0.001
+script = ExtResource("4_42glk")
+bus_name = "SFX"
+
+[node name="Label" type="Label" parent="sfx_slider"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -21.0
+offset_right = 30.0
+offset_bottom = 2.0
+theme_override_fonts/font = ExtResource("2_m0wfx")
+theme_override_font_sizes/font_size = 12
+text = "SFX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXTest" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ckxsa")
+bus = &"SFX"
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -379.0
+offset_right = -222.0
+offset_bottom = 51.0
+color = Color(0.996078, 0.466667, 0.458824, 0.803922)
+
+[node name="GoalLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = -379.0
+offset_right = -222.0
+offset_bottom = 51.0
+theme_override_fonts/font = ExtResource("2_m0wfx")
+theme_override_font_sizes/font_size = 21
+text = "Goal: 1500"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="drag_ended" from="sfx_slider" to="." method="_on_sfx_slider_drag_ended"]

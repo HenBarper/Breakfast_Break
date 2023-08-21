@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Scripts/Main_Menu.gd" id="1_5hxl0"]
 [ext_resource type="Texture2D" uid="uid://ldvpkhsy57qp" path="res://Art Assets/ShopBG_1920x1080px.png" id="2_1g0o0"]
+[ext_resource type="FontFile" uid="uid://bh15jb83w80uc" path="res://Art Assets/Fonts/PeaberryBase.ttf" id="3_jukm0"]
 [ext_resource type="Script" path="res://Scripts/Volume_slider.gd" id="3_r4oa2"]
 [ext_resource type="AudioStream" uid="uid://csqxutm2lis7u" path="res://Music/8-bit-arcade-138828.mp3" id="3_tpkpp"]
-[ext_resource type="AudioStream" uid="uid://coun8xhj3ra67" path="res://SFX/8-bit-powerup-6768.mp3" id="5_afenf"]
 [ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="6_thaw8"]
 
 [node name="Main_Menu" type="Node2D"]
@@ -28,7 +28,7 @@ color = Color(1, 0.317647, 0.45098, 1)
 offset_left = 338.0
 offset_top = 417.0
 offset_right = 800.0
-offset_bottom = 540.0
+offset_bottom = 534.0
 size_flags_horizontal = 4
 color = Color(1, 0.317647, 0.45098, 1)
 
@@ -37,7 +37,7 @@ visible = false
 offset_left = 338.0
 offset_top = 417.0
 offset_right = 800.0
-offset_bottom = 619.0
+offset_bottom = 613.0
 size_flags_horizontal = 4
 color = Color(1, 0.317647, 0.45098, 1)
 
@@ -60,14 +60,20 @@ layout_mode = 2
 
 [node name="Play" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "New Game"
 
 [node name="Options" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "Options"
 
 [node name="Exit" type="Button" parent="Control/MarginContainer/MainMenuContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "Exit"
 
 [node name="OptionContainer" type="VBoxContainer" parent="Control/MarginContainer"]
@@ -79,9 +85,12 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/MarginContainer/OptionContainer/Master"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "Master
 "
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Master Slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
@@ -96,8 +105,11 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/MarginContainer/OptionContainer/Music"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "Music"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Music Slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
@@ -112,8 +124,11 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/MarginContainer/OptionContainer/sfx label"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "SFX"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SFX slider" type="HSlider" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
@@ -125,6 +140,8 @@ bus_name = "SFX"
 
 [node name="Back" type="Button" parent="Control/MarginContainer/OptionContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 19
 text = "Back"
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
@@ -135,18 +152,33 @@ offset_bottom = -34.0
 
 [node name="Title" type="Label" parent="Control/PanelContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 46
 text = "Breakfast Break!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PanelContainer2" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = -400.0
+offset_top = 336.0
+offset_right = 875.0
+offset_bottom = 376.0
+
+[node name="Label" type="Label" parent="Control/PanelContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_jukm0")
+theme_override_font_sizes/font_size = 25
+text = "Created by: Ben Harper, Sarah Markland, and Mike Bilbee"
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="MusicAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tpkpp")
-autoplay = true
 bus = &"Music"
 
 [node name="SFXTest" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_afenf")
+stream = ExtResource("6_thaw8")
 bus = &"SFX"
 
 [node name="ButtonPress" type="AudioStreamPlayer" parent="."]

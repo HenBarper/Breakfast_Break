@@ -1,21 +1,47 @@
 extends TextureRect
 
+@onready var sfx_test = $SFXTest
+@onready var master_slider = $master_slider
+
 # labels
 @onready var score_label = $ScoreLabel
 @onready var time_label = $TimeLabel
 @onready var move_label = $MoveLabel
+@onready var goal_label = $GoalLabel
 
-# timer vars
+# game over
+@onready var game_over = $"../GAME_OVER"
+@onready var game_over_text = $"../GAME_OVER/game_over_text"
+@onready var sad_bears = $"../GAME_OVER/Sad_bears"
+
+# SFX
+@onready var game_over_sfx = $"../gameOverSFX"
+@onready var win_sfx = $"../winSFX"
+
+
+# score variables
 var current_score = 0
+var goal_score = 2000
+signal goal_reached
+var has_won = false
+
+# time variables
 var current_second = 0
 var second_string = "00"
-var current_minute = 0
-var minute_string = "00"
+var current_minute = 3
+var minute_string = "03"
+signal time_up
+var has_timed_out = false
 
-# move vars
-var num_moves = 0
+# move variables
+var num_moves = 50
+signal out_moves
+var has_no_moves = false
 
 func _ready():
+	var goal_format_string = "Goal: %s"
+	var goal_string = goal_format_string % str(goal_score)
+	goal_label.text = goal_string
 	_on_grid_update_score(current_score)
 
 func _on_grid_update_score(ammount_to_change): # updates the score from grid signal
@@ -23,6 +49,8 @@ func _on_grid_update_score(ammount_to_change): # updates the score from grid sig
 	score_label.text = str(current_score)
 
 func _update_time():
+	if current_second < 0:
+		current_second = 0
 	var second_format_string = ""
 	var minute_format_string = ""
 	var time_format_string = ""
@@ -43,19 +71,52 @@ func _update_time():
 	time_label.text = time_string
 
 func _on_timer_timeout():
-	print("timer:")
-	print(current_second)
-	current_second += 1
-	if current_second >= 60:
-		current_minute += 1
-		current_second = 0
+	current_second -= 1
+	if current_second <= 0:
+		if current_minute > 0:
+			current_minute -= 1
+			current_second = 59
 	_update_time()
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_touch"):
-		_update_time()
+	if current_score >= goal_score && !has_won:
+		set_true_conditions() # set all win/lose conditions to true so they won't be called again
+		emit_signal("goal_reached")
+		print("GOAL REACHED")
+		game_over.visible = true
+		game_over_text.text = "YOU WIN!!!"
+		win_sfx.play()
+	if current_minute <= 0 && current_second <= 0 && !has_timed_out:
+		set_true_conditions() # set all win/lose conditions to true so they won't be called again
+		emit_signal("time_up")
+		print("TIME UP")
+		game_over.visible = true
+		sad_bears.visible = true
+		game_over_text.text = "You ran out of time..."
+		game_over_sfx.play()
+	if num_moves <= 0 && !has_no_moves:
+		set_true_conditions() # set all win/lose conditions to true so they won't be called again
+		emit_signal("out_moves")
+		print("OUT OF MOVES")
+		game_over.visible = true
+		sad_bears.visible = true
+		game_over_text.text = "You ran out of moves..."
+		game_over_sfx.play()
 
+func set_true_conditions():  # set all win/lose conditions to true so they won't be called again
+	has_won = true
+	has_timed_out = true
+	has_no_moves = true
 
 func _on_grid_update_moves():
-	num_moves += 1
+	num_moves -= 1
 	move_label.text = str(num_moves)
+
+func _on_sfx_slider_drag_ended(value_changed):
+	sfx_test.play()
+
+func _on_retry_pressed():
+	get_tree().change_scene_to_file("res://Scenes/Game_Scene.tscn") # Load level 1
+
+func _on_back_pressed():
+	get_tree().change_scene_to_file("res://Scenes/Main_Menu.tscn") # Load main menu

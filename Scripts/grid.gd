@@ -268,3 +268,12 @@ func _on_refill_timer_timeout():
 
 func _on_newgame_timer_timeout():
 	spawn_pieces()
+
+func _on_top_ui_goal_reached():
+	state = wait
+
+func _on_top_ui_out_moves():
+	state = wait
+
+func _on_top_ui_time_up():
+	state = wait

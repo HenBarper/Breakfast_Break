@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://clpvd6h4mx7sn"]
+[gd_scene load_steps=22 format=3 uid="uid://clpvd6h4mx7sn"]
 
 [ext_resource type="Texture2D" uid="uid://bacnwvokb7dq5" path="res://Art Assets/Pieces/Blue Piece.png" id="1_2bqy4"]
 [ext_resource type="Texture2D" uid="uid://yu815ho6falp" path="res://Art Assets/patio.png" id="1_iqt3c"]
@@ -13,9 +13,14 @@
 [ext_resource type="AudioStream" uid="uid://dxk2bqtfpxr5s" path="res://SFX/game-start-6104.mp3" id="10_75r0m"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_1.tscn" id="11_0ky8n"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_2.tscn" id="12_4rdj6"]
+[ext_resource type="AudioStream" uid="uid://ct8afyc1nr601" path="res://SFX/videogame-death-sound-43894.mp3" id="12_swop4"]
+[ext_resource type="AudioStream" uid="uid://bnsk6xpi2oswc" path="res://SFX/winsquare-6993.mp3" id="13_m6wn2"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_3.tscn" id="13_tab8c"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_4.tscn" id="14_q8qsi"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_5.tscn" id="15_uk4ck"]
+[ext_resource type="Texture2D" uid="uid://bpcadgtwee1mj" path="res://Art Assets/UI/GameOver_Background2.png" id="17_4srx3"]
+[ext_resource type="FontFile" uid="uid://bh15jb83w80uc" path="res://Art Assets/Fonts/PeaberryBase.ttf" id="18_fw0ma"]
+[ext_resource type="Texture2D" uid="uid://bh3gloshq5xha" path="res://Art Assets/UI/BearGG.png" id="21_e80bf"]
 
 [node name="Game_Scene" type="Node2D"]
 
@@ -473,6 +478,14 @@ bus = &"SFX"
 stream = ExtResource("10_75r0m")
 bus = &"SFX"
 
+[node name="gameOverSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_swop4")
+bus = &"SFX"
+
+[node name="winSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_m6wn2")
+bus = &"SFX"
+
 [node name="Bears" type="Node" parent="."]
 
 [node name="hamster 1" parent="Bears" instance=ExtResource("11_0ky8n")]
@@ -517,9 +530,73 @@ wait_time = 0.5
 one_shot = true
 autostart = true
 
+[node name="GAME_OVER" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(576, 358)
+texture = ExtResource("17_4srx3")
+
+[node name="game_over_text" type="Label" parent="GAME_OVER"]
+offset_left = -156.0
+offset_top = -20.0
+offset_right = 176.0
+offset_bottom = 11.0
+theme_override_fonts/font = ExtResource("18_fw0ma")
+theme_override_font_sizes/font_size = 27
+text = "You ran out of moves..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="retry_rect" type="ColorRect" parent="GAME_OVER"]
+offset_left = -174.0
+offset_top = 99.0
+offset_right = -34.0
+offset_bottom = 144.0
+color = Color(0.996094, 0.8125, 0.652344, 1)
+
+[node name="back_rect" type="ColorRect" parent="GAME_OVER"]
+offset_left = 28.0
+offset_top = 99.0
+offset_right = 168.0
+offset_bottom = 144.0
+color = Color(0.996094, 0.8125, 0.652344, 1)
+
+[node name="Retry" type="Button" parent="GAME_OVER"]
+offset_left = -175.0
+offset_top = 99.0
+offset_right = -34.0
+offset_bottom = 143.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("18_fw0ma")
+theme_override_font_sizes/font_size = 20
+text = "Retry"
+flat = true
+
+[node name="Back" type="Button" parent="GAME_OVER"]
+offset_left = 27.0
+offset_top = 99.0
+offset_right = 168.0
+offset_bottom = 143.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("18_fw0ma")
+theme_override_font_sizes/font_size = 20
+text = "Back"
+flat = true
+
+[node name="Sad_bears" type="Node2D" parent="GAME_OVER"]
+visible = false
+
+[node name="panda" type="Sprite2D" parent="GAME_OVER/Sad_bears"]
+position = Vector2(1, -92)
+texture = ExtResource("21_e80bf")
+
+[connection signal="goal_reached" from="TopUI" to="grid" method="_on_top_ui_goal_reached"]
+[connection signal="out_moves" from="TopUI" to="grid" method="_on_top_ui_out_moves"]
+[connection signal="time_up" from="TopUI" to="grid" method="_on_top_ui_time_up"]
 [connection signal="update_moves" from="grid" to="TopUI" method="_on_grid_update_moves"]
 [connection signal="update_score" from="grid" to="TopUI" method="_on_grid_update_score"]
 [connection signal="timeout" from="destroy_timer" to="grid" method="_on_destroy_timer_timeout"]
 [connection signal="timeout" from="collapse_timer" to="grid" method="_on_collapse_timer_timeout"]
 [connection signal="timeout" from="refill_timer" to="grid" method="_on_refill_timer_timeout"]
 [connection signal="timeout" from="newgame_timer" to="grid" method="_on_newgame_timer_timeout"]
+[connection signal="pressed" from="GAME_OVER/Retry" to="TopUI" method="_on_retry_pressed"]
+[connection signal="pressed" from="GAME_OVER/Back" to="TopUI" method="_on_back_pressed"]

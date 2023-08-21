@@ -46,6 +46,14 @@ var first_touch = Vector2(0, 0)
 var final_touch = Vector2(0, 0)
 var controlling = false
 
+# scoring variables
+signal update_score
+@export var piece_value: int
+var streak = 1
+
+# moves variables
+signal update_moves
+
 func _ready():
 	state = move
 	randomize()
@@ -114,6 +122,8 @@ func touch_input(): # register click inputs
 			controlling = false
 			final_touch = pixel_to_grid(get_global_mouse_position().x, get_global_mouse_position().y) # sets a var with the unlick pos
 			swap_sfx.play() # PLAY SFX
+			emit_signal("update_moves")
+			streak = 1
 			touch_difference(first_touch, final_touch) # gets the direction from click to unclick
 
 func swap_pieces(column, row, direction):
@@ -132,14 +142,13 @@ func swap_pieces(column, row, direction):
 		if !move_checked:
 			find_matches()
 
-func store_info(first_piece, other_piece, place, direction):
+func store_info(first_piece, other_piece, place, direction): # stores the info of the two peieces for the swap_back() method
 	piece_one = first_piece
 	piece_two = other_piece
 	last_place = place
 	last_direction = direction
 
-func swap_back():
-	#move the previously swapped pieces back to the previous place.
+func swap_back(): # move the previously swapped pieces back to the previous place.
 	if piece_one != null && piece_two != null:
 		swap_pieces(last_place.x, last_place.y, last_direction)
 	state = move
@@ -172,30 +181,29 @@ func find_matches():
 				if i > 0 && i < width - 1:
 					if all_pieces[i - 1][j] != null && all_pieces[i + 1][j] != null: # check that 3 pieces in a row exist
 						if all_pieces[i - 1][j].color == current_color && all_pieces[i + 1][j].color == current_color: # check that the colors match
-							all_pieces[i - 1][j].matched = true
-							all_pieces[i - 1][j].dim()
-							all_pieces[i][j].matched = true
-							all_pieces[i][j].dim()
-							all_pieces[i + 1][j].matched = true
-							all_pieces[i + 1][j].dim()
+							match_and_dim(all_pieces[i - 1][j])
+							match_and_dim(all_pieces[i][j])
+							match_and_dim(all_pieces[i + 1][j])
 							match_sfx.play()
 							#destroy_timer.start() # starts the timer that checks for matched pieces to destroy
 				if j > 0 && j < height - 1:
 					if all_pieces[i][j - 1] != null && all_pieces[i][j + 1] != null: # check that 3 pieces in a row exist
 						if all_pieces[i][j - 1].color == current_color && all_pieces[i][j + 1].color == current_color: # check that the colors match
-							all_pieces[i][j - 1].matched = true
-							all_pieces[i][j - 1].dim()
-							all_pieces[i][j].matched = true
-							all_pieces[i][j].dim()
-							all_pieces[i][j + 1].matched = true
-							all_pieces[i][j + 1].dim()
+							match_and_dim(all_pieces[i][j - 1])
+							match_and_dim(all_pieces[i][j])
+							match_and_dim(all_pieces[i][j + 1])
 							match_sfx.play()
 							#destroy_timer.start() # starts the timer that checks for matched pieces to destroy
 	destroy_timer.start() # starts the timer that checks for matched pieces to destroy
 
+func match_and_dim(item):
+	item.matched = true
+	item.dim()
+
 func destroy_matched():
 	var was_matched = false # looks through all pieces and destroys ones marked matched
 	print("destroying matches")
+	print(streak)
 	state = move
 	move_checked = false
 	for i in width:
@@ -205,12 +213,13 @@ func destroy_matched():
 					was_matched = true
 					all_pieces[i][j].queue_free() # destroy it
 					all_pieces[i][j] = null # set the piece's space to null
+					emit_signal("update_score", piece_value * streak) # sends signal to change the score ui
 	move_checked = true
 	if was_matched:
 		collapse_timer.start() # check for pieces to move down
 	else:
 		swap_back()
-	#print("past collapse timer")
+	print("End of destroy")
 
 func collapse_columns(): # looks through all the pieces for empty spaces and moves down the next piece up
 	print("collapsing columns")
@@ -229,6 +238,7 @@ func collapse_columns(): # looks through all the pieces for empty spaces and mov
 	refill_timer.start()
 						
 func refill_columns():
+	streak += 1
 	for i in width:
 		for j in height:
 			if all_pieces[i][j] == null:

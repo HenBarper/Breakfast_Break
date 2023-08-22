@@ -33,7 +33,7 @@
 2. Open the project in your preferred game development environment.
 3. Build and run the game on your desired platform.
 
-   Or visit the itch.io page to download or play in browser! [LINK HERE]
+   Or visit the itch.io page to download or play in browser [here](https://breakfasthub.itch.io/breakfast-break)!
 
 ## Feedback and Contributions
 
@@ -47,3 +47,4 @@ We're excited to hear your feedback and suggestions for improving Breakfast Brea
 
 Enjoy the breakfast bonanza and have a great time playing Breakfast Breakers!
 
+Visit the [BreakfastHub](https://breakfasthub.itch.io/) to learn more.

@@ -10,14 +10,19 @@ extends TextureRect
 @onready var goal_label = $GoalLabel
 
 # game over
+@onready var title_text = $"../GAME_OVER/Title_text"
 @onready var game_over = $"../GAME_OVER"
 @onready var game_over_text = $"../GAME_OVER/game_over_text"
 @onready var sad_bears = $"../GAME_OVER/Sad_bears"
+@onready var happy_bears = $"../GAME_OVER/happy_bears"
 
 # SFX
 @onready var game_over_sfx = $"../gameOverSFX"
 @onready var win_sfx = $"../winSFX"
 
+# pause
+var paused = false
+@onready var pause_block = $pause_block
 
 # score variables
 var current_score = 0
@@ -71,25 +76,29 @@ func _update_time():
 	time_label.text = time_string
 
 func _on_timer_timeout():
-	current_second -= 1
-	if current_second <= 0:
-		if current_minute > 0:
-			current_minute -= 1
-			current_second = 59
-	_update_time()
+	if !paused:
+		current_second -= 1
+		if current_second <= 0:
+			if current_minute > 0:
+				current_minute -= 1
+				current_second = 59
+		_update_time()
 
 func _process(delta):
 	if current_score >= goal_score && !has_won:
 		set_true_conditions() # set all win/lose conditions to true so they won't be called again
 		emit_signal("goal_reached")
 		print("GOAL REACHED")
+		title_text.text = "YOU WIN!"
 		game_over.visible = true
+		happy_bears.visible = true
 		game_over_text.text = "YOU WIN!!!"
 		win_sfx.play()
 	if current_minute <= 0 && current_second <= 0 && !has_timed_out:
 		set_true_conditions() # set all win/lose conditions to true so they won't be called again
 		emit_signal("time_up")
 		print("TIME UP")
+		title_text.text = "GAME OVER..."
 		game_over.visible = true
 		sad_bears.visible = true
 		game_over_text.text = "You ran out of time..."
@@ -98,6 +107,7 @@ func _process(delta):
 		set_true_conditions() # set all win/lose conditions to true so they won't be called again
 		emit_signal("out_moves")
 		print("OUT OF MOVES")
+		title_text.text = "GAME OVER..."
 		game_over.visible = true
 		sad_bears.visible = true
 		game_over_text.text = "You ran out of moves..."
@@ -120,3 +130,14 @@ func _on_retry_pressed():
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Main_Menu.tscn") # Load main menu
+
+func _on_back_button_pressed():
+	get_tree().change_scene_to_file("res://Scenes/Main_Menu.tscn") # Load main menu
+
+func _on_pause_button_pressed():
+	if paused:
+		paused = false
+		pause_block.visible = false
+	else:
+		paused = true
+		pause_block.visible = true

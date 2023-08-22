@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://clpvd6h4mx7sn"]
+[gd_scene load_steps=27 format=3 uid="uid://clpvd6h4mx7sn"]
 
 [ext_resource type="Texture2D" uid="uid://bacnwvokb7dq5" path="res://Art Assets/Pieces/Blue Piece.png" id="1_2bqy4"]
 [ext_resource type="Texture2D" uid="uid://yu815ho6falp" path="res://Art Assets/patio.png" id="1_iqt3c"]
@@ -18,9 +18,14 @@
 [ext_resource type="PackedScene" path="res://Scenes/hamster_3.tscn" id="13_tab8c"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_4.tscn" id="14_q8qsi"]
 [ext_resource type="PackedScene" path="res://Scenes/hamster_5.tscn" id="15_uk4ck"]
-[ext_resource type="Texture2D" uid="uid://bpcadgtwee1mj" path="res://Art Assets/UI/GameOver_Background2.png" id="17_4srx3"]
 [ext_resource type="FontFile" uid="uid://bh15jb83w80uc" path="res://Art Assets/Fonts/PeaberryBase.ttf" id="18_fw0ma"]
+[ext_resource type="Texture2D" uid="uid://ifi5w5cc2mln" path="res://Art Assets/UI/BlankEndBackground.png" id="19_48oxa"]
 [ext_resource type="Texture2D" uid="uid://bh3gloshq5xha" path="res://Art Assets/UI/BearGG.png" id="21_e80bf"]
+[ext_resource type="Texture2D" uid="uid://baxcghkaiddbh" path="res://Art Assets/UI/BearGG2.png" id="21_gqkxp"]
+[ext_resource type="Texture2D" uid="uid://dcuansq8y2sxv" path="res://Art Assets/UI/BearGG4.png" id="22_sw0uh"]
+[ext_resource type="Texture2D" uid="uid://ds5bdkg0dh84w" path="res://Art Assets/UI/BearGG5.png" id="23_lf0jy"]
+[ext_resource type="Texture2D" uid="uid://djurxbf5oyo40" path="res://Art Assets/UI/BearGG3.png" id="24_8ffl7"]
+[ext_resource type="Texture2D" uid="uid://bh2hl5qt76o4" path="res://Art Assets/BearSprites.png" id="26_ohduc"]
 
 [node name="Game_Scene" type="Node2D"]
 
@@ -449,8 +454,6 @@ position = Vector2(288, 512)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_2bqy4")
 
-[node name="TopUI" parent="." instance=ExtResource("7_l23ll")]
-
 [node name="BottomUI" type="TextureRect" parent="."]
 visible = false
 offset_left = 432.0
@@ -469,6 +472,8 @@ y_start = 602
 offset = 64
 y_offset = -3
 piece_value = 10
+
+[node name="TopUI" parent="." instance=ExtResource("7_l23ll")]
 
 [node name="swapSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_4yk1e")
@@ -533,7 +538,18 @@ autostart = true
 [node name="GAME_OVER" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(576, 358)
-texture = ExtResource("17_4srx3")
+texture = ExtResource("19_48oxa")
+
+[node name="Title_text" type="Label" parent="GAME_OVER"]
+offset_left = -111.0
+offset_top = -226.0
+offset_right = 93.0
+offset_bottom = -185.0
+theme_override_fonts/font = ExtResource("18_fw0ma")
+theme_override_font_sizes/font_size = 37
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="game_over_text" type="Label" parent="GAME_OVER"]
 offset_left = -156.0
@@ -585,15 +601,83 @@ flat = true
 [node name="Sad_bears" type="Node2D" parent="GAME_OVER"]
 visible = false
 
+[node name="brown" type="Sprite2D" parent="GAME_OVER/Sad_bears"]
+position = Vector2(197, 187)
+texture = ExtResource("21_gqkxp")
+
+[node name="peach" type="Sprite2D" parent="GAME_OVER/Sad_bears"]
+position = Vector2(-199, 185)
+texture = ExtResource("22_sw0uh")
+flip_h = true
+
+[node name="pink" type="Sprite2D" parent="GAME_OVER/Sad_bears"]
+position = Vector2(194, -66)
+texture = ExtResource("23_lf0jy")
+
+[node name="white" type="Sprite2D" parent="GAME_OVER/Sad_bears"]
+position = Vector2(-196, -198)
+texture = ExtResource("24_8ffl7")
+flip_h = true
+
 [node name="panda" type="Sprite2D" parent="GAME_OVER/Sad_bears"]
-position = Vector2(1, -92)
+position = Vector2(8, -95)
 texture = ExtResource("21_e80bf")
 
+[node name="happy_bears" type="Node2D" parent="GAME_OVER"]
+visible = false
+
+[node name="brown" type="Sprite2D" parent="GAME_OVER/happy_bears"]
+texture_filter = 1
+position = Vector2(202, 185)
+scale = Vector2(4, 4)
+texture = ExtResource("26_ohduc")
+hframes = 2
+vframes = 5
+
+[node name="panda" type="Sprite2D" parent="GAME_OVER/happy_bears"]
+texture_filter = 1
+position = Vector2(166, -138)
+scale = Vector2(4, 4)
+texture = ExtResource("26_ohduc")
+hframes = 2
+vframes = 5
+frame = 2
+
+[node name="white" type="Sprite2D" parent="GAME_OVER/happy_bears"]
+texture_filter = 1
+position = Vector2(-196, 186)
+scale = Vector2(4, 4)
+texture = ExtResource("26_ohduc")
+flip_h = true
+hframes = 2
+vframes = 5
+frame = 4
+
+[node name="peach" type="Sprite2D" parent="GAME_OVER/happy_bears"]
+texture_filter = 1
+position = Vector2(-186, -192)
+scale = Vector2(4, 4)
+texture = ExtResource("26_ohduc")
+flip_h = true
+hframes = 2
+vframes = 5
+frame = 6
+
+[node name="pink" type="Sprite2D" parent="GAME_OVER/happy_bears"]
+texture_filter = 1
+position = Vector2(-23, -85)
+scale = Vector2(4, 4)
+texture = ExtResource("26_ohduc")
+flip_h = true
+hframes = 2
+vframes = 5
+frame = 8
+
+[connection signal="update_moves" from="grid" to="TopUI" method="_on_grid_update_moves"]
+[connection signal="update_score" from="grid" to="TopUI" method="_on_grid_update_score"]
 [connection signal="goal_reached" from="TopUI" to="grid" method="_on_top_ui_goal_reached"]
 [connection signal="out_moves" from="TopUI" to="grid" method="_on_top_ui_out_moves"]
 [connection signal="time_up" from="TopUI" to="grid" method="_on_top_ui_time_up"]
-[connection signal="update_moves" from="grid" to="TopUI" method="_on_grid_update_moves"]
-[connection signal="update_score" from="grid" to="TopUI" method="_on_grid_update_score"]
 [connection signal="timeout" from="destroy_timer" to="grid" method="_on_destroy_timer_timeout"]
 [connection signal="timeout" from="collapse_timer" to="grid" method="_on_collapse_timer_timeout"]
 [connection signal="timeout" from="refill_timer" to="grid" method="_on_refill_timer_timeout"]

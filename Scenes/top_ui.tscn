@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b11d4bw57h8go"]
+[gd_scene load_steps=11 format=3 uid="uid://b11d4bw57h8go"]
 
 [ext_resource type="Texture2D" uid="uid://dnj16tmydhxxv" path="res://Art Assets/UI/Top_UI_v_2.png" id="1_xs1p4"]
 [ext_resource type="Script" path="res://Scripts/top_ui.gd" id="2_22iws"]
@@ -7,6 +7,12 @@
 [ext_resource type="AudioStream" uid="uid://dft71p6h3vwjt" path="res://SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3" id="5_ckxsa"]
 [ext_resource type="Texture2D" uid="uid://cnkxl3flstkpd" path="res://Art Assets/UI/Back_Button (1).png" id="6_3wpo1"]
 [ext_resource type="Texture2D" uid="uid://b7844fpmbp2t2" path="res://Art Assets/UI/Pause_Button (1).png" id="7_iwo0s"]
+[ext_resource type="Texture2D" uid="uid://bmvu2mhvsmror" path="res://Art Assets/UI/Score Bar Background.png" id="8_3ah56"]
+[ext_resource type="Texture2D" uid="uid://7fxikuxumqn1" path="res://Art Assets/UI/Score Bar Fill2.png" id="10_n6dc1"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_14cph"]
+color = Color(0.679688, 0.867188, 0.453125, 1)
+thickness = 6
 
 [node name="TopUI" type="TextureRect"]
 offset_left = 432.0
@@ -21,7 +27,7 @@ script = ExtResource("2_22iws")
 visible = false
 layout_mode = 0
 offset_left = -204.0
-offset_top = 105.0
+offset_top = 100.0
 offset_right = 492.0
 offset_bottom = 626.0
 color = Color(0.855469, 0.433594, 0.425781, 1)
@@ -162,7 +168,7 @@ bus = &"SFX"
 [node name="goal_rect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = -379.0
-offset_right = -222.0
+offset_right = -47.0
 offset_bottom = 51.0
 color = Color(0.996078, 0.466667, 0.458824, 0.803922)
 
@@ -202,6 +208,27 @@ flat = true
 position = Vector2(38, 37)
 scale = Vector2(0.585938, 0.585938)
 texture = ExtResource("7_iwo0s")
+
+[node name="progress" type="HSlider" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -207.0
+offset_top = 18.0
+offset_right = -17.0
+offset_bottom = 34.0
+theme_override_styles/slider = SubResource("StyleBoxLine_14cph")
+value = 50.0
+editable = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = -212.0
+offset_top = 10.0
+offset_right = -59.0
+offset_bottom = 39.0
+value = 50.0
+texture_under = ExtResource("8_3ah56")
+texture_progress = ExtResource("10_n6dc1")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="drag_ended" from="sfx_slider" to="." method="_on_sfx_slider_drag_ended"]

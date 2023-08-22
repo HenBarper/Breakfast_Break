@@ -29,6 +29,8 @@ var current_score = 0
 var goal_score = 2000
 signal goal_reached
 var has_won = false
+@onready var progress = $progress
+@onready var texture_progress_bar = $TextureProgressBar
 
 # time variables
 var current_second = 0
@@ -44,6 +46,8 @@ signal out_moves
 var has_no_moves = false
 
 func _ready():
+	progress.max_value = goal_score
+	texture_progress_bar.max_value = goal_score
 	var goal_format_string = "Goal: %s"
 	var goal_string = goal_format_string % str(goal_score)
 	goal_label.text = goal_string
@@ -52,6 +56,8 @@ func _ready():
 func _on_grid_update_score(ammount_to_change): # updates the score from grid signal
 	current_score += ammount_to_change
 	score_label.text = str(current_score)
+	progress.value = current_score
+	texture_progress_bar.value = current_score
 
 func _update_time():
 	if current_second < 0:
@@ -76,7 +82,7 @@ func _update_time():
 	time_label.text = time_string
 
 func _on_timer_timeout():
-	if !paused:
+	if !paused && !has_won && !has_no_moves:
 		current_second -= 1
 		if current_second <= 0:
 			if current_minute > 0:

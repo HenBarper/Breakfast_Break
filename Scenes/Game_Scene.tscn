@@ -500,7 +500,7 @@ scale = Vector2(2, 2)
 
 [node name="hamster 2" parent="Bears" instance=ExtResource("12_4rdj6")]
 texture_filter = 1
-position = Vector2(1096, 624)
+position = Vector2(1085, 618)
 scale = Vector2(2, 2)
 
 [node name="hamster 3" parent="Bears" instance=ExtResource("13_tab8c")]

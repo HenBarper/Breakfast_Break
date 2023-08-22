@@ -277,3 +277,9 @@ func _on_top_ui_out_moves():
 
 func _on_top_ui_time_up():
 	state = wait
+
+func set_wait():
+	state = wait
+
+func set_move():
+	state = move

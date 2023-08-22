@@ -23,6 +23,7 @@ extends TextureRect
 # pause
 var paused = false
 @onready var pause_block = $pause_block
+@onready var grid = $"../grid"
 
 # score variables
 var current_score = 0
@@ -144,6 +145,8 @@ func _on_pause_button_pressed():
 	if paused:
 		paused = false
 		pause_block.visible = false
+		grid.set_move()
 	else:
 		paused = true
 		pause_block.visible = true
+		grid.set_wait()

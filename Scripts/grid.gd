@@ -1,15 +1,20 @@
+# This script extends the Node2D class - a fundamental building block for 2D games in Godot
 extends Node2D
 
-# State Machine
+# Define an enum for the state machine, which will control the behavior of the game
+# The states are 'wait' and 'move', representing different gameplay phases
 enum {wait, move}
 var state
-# timers
+
+# Declare timers for various game events like destroying, collapsing, refilling
+# Timers are set up in the editor and accessed here using @onready
 @onready var destroy_timer = $"../destroy_timer"
 @onready var collapse_timer = $"../collapse_timer"
 @onready var refill_timer = $"../refill_timer"
 #@onready var newgame_timer = $"../newgame_timer"
 
-# grid variables
+# Grid variables define dimensions and starting position of game grid
+# Offset and y_offset variables adjust positioning of pieces on grid
 @export var width: int
 @export var height: int
 @export var x_start: int
@@ -17,11 +22,12 @@ var state
 @export var offset: int
 @export var y_offset: int
 
-# SFX
+# SFX - Sound effects for swapping and matching pieces preloaded & accessed here
 @onready var swap_sfx = $"../swapSFX"
 @onready var match_sfx = $"../matchSFX"
 
-# piece array
+# Array of possible pieces that can be spawned in the game
+# Each piece is a scene that is preloaded for performance
 var possible_pieces = [
 	preload("res://Scenes/blue_piece.tscn"),
 	preload("res://Scenes/green_piece.tscn"),
@@ -31,27 +37,29 @@ var possible_pieces = [
 	preload("res://Scenes/yellow_piece.tscn")
 ]
 
-# current pieces in the scene
+# 2D Array to represent grid & hold all current pieces in scene
 var all_pieces = []
 
-# swap back variables
+# Variables to handle piece swapping logic, including references
+# to the two pieces being swapped and their last position and direction
 var piece_one = null
 var piece_two = null
 var last_place = Vector2(0,0)
 var last_direction = Vector2(0,0)
 var move_checked = false
 
-# touch variables
+# Variables to handle touch input for piece swapping
+# Tracks the initial and final touch positions and whether a piece is currently being controlled
 var first_touch = Vector2(0, 0)
 var final_touch = Vector2(0, 0)
 var controlling = false
 
-# scoring variables
+# Scoring variables include a signal for updating the score, the value of each piece, and a streak counter.
 signal update_score
 @export var piece_value: int
 var streak = 1
 
-# moves variables
+# Moves variables include a signal for updating the moves counter.
 signal update_moves
 
 func _ready():

@@ -52,7 +52,7 @@ We're excited to hear your feedback and suggestions for improving Breakfast Brea
 
 ## Contact Us
 
-Ben Harper
+Ben Harper - [LinkedIn](https://www.linkedin.com/in/ben-harper-webdev/), [Github](github.com/henbarper)
 
 Sarah Markland - [LinkedIn](www.linkin.com/in/sarahmarkland-webdev), [Github](github.com/sarahmarkland)
 

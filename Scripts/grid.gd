@@ -63,12 +63,14 @@ var streak = 1
 signal update_moves
 
 func _ready():
+	# Initialize game state to 'move' and randomize random num generator
 	state = move
 	randomize()
 	all_pieces = make_2d_array() # Sets all the pieces of the array to a variable
 #	spawn_pieces()
 
 func make_2d_array():
+	# Create 2D array for the game grid
 	var array = []
 	for i in width: # appends an array per column
 		array.append([])
@@ -77,15 +79,19 @@ func make_2d_array():
 	return array
 
 func spawn_pieces():
+	# Spawn pieces on grid
 	for i in width:
 		for j in height:
+			# Choose random piece from possible_pieces arr
 			var rand = floor(randf_range(0, possible_pieces.size())) # choose a random number and store it
 			var piece = possible_pieces[rand].instantiate() # Instantiate that piece from the array
 			var loops = 0
+			# Ensure piece does not spawn in position that would immediately create match-3
 			while match_at(i, j, piece.color) && loops < 100: #check for match-3s before spawning in piece
 				rand = floor(randf_range(0, possible_pieces.size()))
 				loops += 1
 				piece = possible_pieces[rand].instantiate()
+			# Add piece to scene and set its position on grid
 			add_child(piece) # Adds piece to grid as child of grid
 			piece.position = grid_to_pixel(i, j - y_offset) # Sets the position of the piece to the next position in the grid
 			piece.move(grid_to_pixel(i,j))
